@@ -1,0 +1,382 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="MEI KONG - Digital Menu">
+  <title>MEI KONG — Digital Menu</title>
+
+    <!-- PWA Support -->
+  <link rel="manifest" href="manifest.json">
+  <meta name="theme-color" content="#0B0B0C">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="MEI KONG">
+  <link rel="apple-touch-icon" sizes="180x180" href="https://drive.google.com/uc?export=view&id=1RnLIGRiEAltFqJA4GJCRJgX61sbvFcCT">
+  <link rel="icon" type="image/png" sizes="32x32" href="https://drive.google.com/uc?export=view&id=1pwuN0lzVsn7RhrD4OlEJWAoD0b86nazO">
+  <link rel="icon" type="image/png" sizes="96x96" href="https://drive.google.com/uc?export=view&id=1_j_82fW-NOspYrhDw135NhnEOcR6lm2m">
+  <link rel="icon" type="image/png" sizes="192x192" href="https://drive.google.com/uc?export=view&id=1JOsiyysJQOQiSUL71l_kzEKaxXlYe3c5">
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+  <!-- Stylesheet -->
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <!-- LOADER -->
+  <div id="loader" class="loader">
+    <div class="loader-inner">
+      <div class="loader-dot"></div>
+      <div class="loader-dot"></div>
+      <div class="loader-dot"></div>
+      <p class="loader-text">Loading Menu...</p>
+    </div>
+  </div>
+
+  <!-- ERROR STATE -->
+  <div id="error-state" class="error-state" style="display:none;">
+    <div class="error-inner">
+      <span class="error-emoji">⚠️</span>
+      <h2 class="error-title">Something went wrong</h2>
+      <p class="error-message" id="error-message">Could not load menu data.</p>
+      <button class="btn-primary" onclick="location.reload()">Try Again</button>
+    </div>
+  </div>
+
+  <!-- MAIN APP -->
+  <div id="app" class="app" style="display:none;">
+
+    <!-- NAVBAR -->
+    <nav class="navbar" id="navbar">
+      <div class="navbar-inner">
+        <div class="navbar-brand">
+          <span class="brand-emoji" id="brand-emoji">☕</span>
+          <div class="brand-text">
+            <h1 class="brand-name" id="brand-name">MEI KONG</h1>
+            <p class="brand-tagline" id="brand-tagline">Cozy corners & warm cups</p>
+          </div>
+        </div>
+        <div class="navbar-actions">
+          <a href="#" class="navbar-icon" id="btn-phone" title="Call Us" aria-label="Call Us">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/>
+            </svg>
+          </a>
+          <a href="#" class="navbar-icon navbar-icon-accent" id="btn-whatsapp" title="WhatsApp" aria-label="WhatsApp Order">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+              <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
+            </svg>
+          </a>
+        </div>
+      </div>
+    </nav>
+
+       <!-- HERO WITH BANNER SLIDER -->
+    <header class="hero" id="hero">
+      <!-- Background Slider -->
+      <div class="hero-slider" id="hero-slider">
+        <div class="hero-slider-track" id="hero-slider-track">
+          <!-- Slides injected by JS -->
+        </div>
+      </div>
+
+      <!-- Dark Overlay -->
+      <div class="hero-overlay"></div>
+
+      <!-- Text Content (Always on top) -->
+      <div class="hero-content">
+        <span class="hero-emoji" id="hero-emoji">☕</span>
+        <h2 class="hero-title" id="hero-title">Welcome to MEI KONG</h2>
+        <p class="hero-subtitle" id="hero-subtitle">Cozy corners & warm cups</p>
+        <div class="hero-info">
+          <a href="#" class="hero-info-item" id="hero-address" title="View on Maps">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/>
+              <circle cx="12" cy="10" r="3"/>
+            </svg>
+            <span>Lahore, Pakistan</span>
+          </a>
+        </div>
+      </div>
+
+      <!-- Slider Dots -->
+      <div class="hero-dots" id="hero-dots"></div>
+
+      <!-- Banner Link (Clickable layer) -->
+      <a href="#" class="hero-banner-link" id="hero-banner-link" target="_blank" rel="noopener noreferrer" style="display:none;"></a>
+    </header>
+
+    <!-- CATEGORY NAV -->
+    <div class="category-nav-wrapper" id="category-nav-wrapper">
+      <div class="category-nav" id="category-nav"></div>
+    </div>
+
+    <!-- SEARCH -->
+    <div class="search-wrapper">
+      <div class="search-bar">
+        <svg class="search-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="11" cy="11" r="8"/>
+          <line x1="21" y1="21" x2="16.65" y2="16.65"/>
+        </svg>
+        <input type="text" class="search-input" id="search-input" placeholder="Search menu items..." aria-label="Search menu items">
+        <button class="search-clear" id="search-clear" style="display:none;" aria-label="Clear search">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <line x1="18" y1="6" x2="6" y2="18"/>
+            <line x1="6" y1="6" x2="18" y2="18"/>
+          </svg>
+        </button>
+      </div>
+    </div>
+
+    <!-- MENU -->
+    <main class="menu-container" id="menu-container"></main>
+
+    <!-- NO RESULTS -->
+    <div class="no-results" id="no-results" style="display:none;">
+      <span class="no-results-emoji">🔍</span>
+      <h3 class="no-results-title">No items found</h3>
+      <p class="no-results-text">Try searching with different keywords</p>
+    </div>
+
+    <!-- ITEM MODAL -->
+    <div class="modal-overlay" id="modal-overlay" style="display:none;">
+      <div class="modal" id="item-modal">
+        <button class="modal-close" id="modal-close" aria-label="Close modal">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <line x1="18" y1="6" x2="6" y2="18"/>
+            <line x1="6" y1="6" x2="18" y2="18"/>
+          </svg>
+        </button>
+        <div class="modal-image-wrapper" id="modal-image-wrapper">
+          <img class="modal-image" id="modal-image" src="" alt="" loading="lazy">
+        </div>
+        <div class="modal-body">
+          <div class="modal-badges" id="modal-badges"></div>
+          <h2 class="modal-title" id="modal-title">Item Name</h2>
+          <p class="modal-description" id="modal-description">Item description.</p>
+          <div class="modal-price-section" id="modal-price-section">
+            <span class="modal-price" id="modal-price">Rs. 0</span>
+          </div>
+          <div class="modal-variants" id="modal-variants" style="display:none;">
+            <p class="modal-variants-label">Choose Size:</p>
+            <div class="variants-list" id="variants-list"></div>
+          </div>
+          <a href="#" class="btn-order" id="btn-order" target="_blank" rel="noopener noreferrer">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
+              <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
+            </svg>
+            <span>Order via WhatsApp</span>
+          </a>
+          <button class="btn-add-cart" id="btn-add-cart">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="9" cy="21" r="1"/>
+              <circle cx="20" cy="21" r="1"/>
+              <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/>
+            </svg>
+            <span>Add to Cart</span>
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- CART FAB -->
+    <button class="cart-fab" id="cart-fab" style="display:none;" aria-label="View Cart">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <circle cx="9" cy="21" r="1"/>
+        <circle cx="20" cy="21" r="1"/>
+        <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/>
+      </svg>
+      <span class="cart-fab-count" id="cart-fab-count">0</span>
+    </button>
+
+    <!-- CART DRAWER -->
+    <div class="cart-overlay" id="cart-overlay" style="display:none;">
+      <div class="cart-drawer" id="cart-drawer">
+        <div class="cart-header">
+          <h2 class="cart-header-title">Your Order</h2>
+          <button class="cart-header-close" id="cart-close" aria-label="Close Cart">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <line x1="18" y1="6" x2="6" y2="18"/>
+              <line x1="6" y1="6" x2="18" y2="18"/>
+            </svg>
+          </button>
+        </div>
+        <div class="cart-body" id="cart-body"></div>
+        <div class="cart-empty" id="cart-empty">
+          <span class="cart-empty-emoji">🛒</span>
+          <p class="cart-empty-text">Your cart is empty</p>
+        </div>
+        <div class="cart-footer" id="cart-footer" style="display:none;">
+          <div class="cart-total-row">
+            <span class="cart-total-label">Total</span>
+            <span class="cart-total-value" id="cart-total">Rs. 0</span>
+          </div>
+          <button class="btn-checkout" id="btn-checkout">Proceed to Order</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- ORDER TYPE POPUP -->
+    <div class="popup-overlay" id="ordertype-overlay" style="display:none;">
+      <div class="popup-box">
+        <button class="popup-close" id="ordertype-close" aria-label="Close">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <line x1="18" y1="6" x2="6" y2="18"/>
+            <line x1="6" y1="6" x2="18" y2="18"/>
+          </svg>
+        </button>
+        <h3 class="popup-title">How would you like your order?</h3>
+        <p class="popup-subtitle">Choose your order type</p>
+        <div class="ordertype-options">
+          <button class="ordertype-btn" id="btn-dinein" data-type="dine-in">
+            <span class="ordertype-emoji">🍽️</span>
+            <span class="ordertype-label">Dine In</span>
+            <span class="ordertype-desc">Eat at restaurant</span>
+          </button>
+          <button class="ordertype-btn" id="btn-takeaway" data-type="takeaway">
+            <span class="ordertype-emoji">🛵</span>
+            <span class="ordertype-label">Takeaway</span>
+            <span class="ordertype-desc">Home delivery</span>
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- DINE IN POPUP -->
+    <div class="popup-overlay" id="dinein-overlay" style="display:none;">
+      <div class="popup-box popup-box-form">
+        <button class="popup-close" id="dinein-close" aria-label="Close">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <line x1="18" y1="6" x2="6" y2="18"/>
+            <line x1="6" y1="6" x2="18" y2="18"/>
+          </svg>
+        </button>
+        <h3 class="popup-title">🍽️ Dine In Details</h3>
+        <div class="form-group">
+          <label class="form-label" for="dinein-name">Your Name *</label>
+          <input type="text" class="form-input" id="dinein-name" placeholder="Enter your name" required>
+        </div>
+        <div class="form-group">
+          <label class="form-label" for="dinein-table">Table Number *</label>
+          <input type="text" class="form-input" id="dinein-table" placeholder="e.g. Table 5" required>
+        </div>
+        <div class="form-group">
+          <label class="form-label" for="dinein-notes">Additional Notes</label>
+          <textarea class="form-textarea" id="dinein-notes" placeholder="e.g. Extra spicy, Sugar free, With ketchup, With slice..." rows="3"></textarea>
+        </div>
+        <button class="btn-primary btn-full" id="btn-dinein-submit">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
+          </svg>
+          Send Order via WhatsApp
+        </button>
+      </div>
+    </div>
+
+    <!-- TAKEAWAY POPUP -->
+    <div class="popup-overlay" id="takeaway-overlay" style="display:none;">
+      <div class="popup-box popup-box-form">
+        <button class="popup-close" id="takeaway-close" aria-label="Close">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <line x1="18" y1="6" x2="6" y2="18"/>
+            <line x1="6" y1="6" x2="18" y2="18"/>
+          </svg>
+        </button>
+        <h3 class="popup-title">🛵 Takeaway Details</h3>
+        <div class="form-group">
+          <label class="form-label" for="takeaway-name">Your Name *</label>
+          <input type="text" class="form-input" id="takeaway-name" placeholder="Enter your name" required>
+        </div>
+        <div class="form-group">
+          <label class="form-label" for="takeaway-phone">Phone Number *</label>
+          <input type="tel" class="form-input" id="takeaway-phone" placeholder="e.g. 0321-8536794" required>
+        </div>
+        <div class="form-group">
+          <label class="form-label" for="takeaway-address">Delivery Address *</label>
+          <textarea class="form-textarea" id="takeaway-address" placeholder="Enter your full delivery address" rows="2" required></textarea>
+        </div>
+        <div class="form-group">
+          <label class="form-label" for="takeaway-notes">Additional Notes</label>
+          <textarea class="form-textarea" id="takeaway-notes" placeholder="e.g. Extra spicy, Sugar free, With ketchup..." rows="3"></textarea>
+        </div>
+        <button class="btn-primary btn-full" id="btn-takeaway-submit">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
+          </svg>
+          Send Order via WhatsApp
+        </button>
+      </div>
+    </div>
+
+    <!-- FOOTER -->
+    <footer class="footer" id="footer">
+      <div class="footer-inner">
+        <div class="footer-brand">
+          <span class="footer-emoji" id="footer-emoji">☕</span>
+          <h3 class="footer-name" id="footer-name">MEI KONG</h3>
+        </div>
+        <p class="footer-text" id="footer-text">Thank you for visiting</p>
+        <div class="footer-links">
+          <a href="#" class="footer-link" id="footer-phone">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/>
+            </svg>
+            <span id="footer-phone-text">Call Us</span>
+          </a>
+          <a href="#" class="footer-link" id="footer-whatsapp">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+              <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
+            </svg>
+            <span>WhatsApp</span>
+          </a>
+          <a href="#" class="footer-link" id="footer-maps">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/>
+              <circle cx="12" cy="10" r="3"/>
+            </svg>
+            <span>Our Route</span>
+          </a>
+        </div>
+                <!-- Review Section -->
+        <div class="review-section" id="review-section">
+          <div class="review-card">
+            <span class="review-emoji">⭐</span>
+            <h3 class="review-title">Enjoyed your meal?</h3>
+            <p class="review-text">Your review helps us serve better!</p>
+            <div class="review-stars">
+              <span>⭐</span><span>⭐</span><span>⭐</span><span>⭐</span><span>⭐</span>
+            </div>
+            <a href="#" class="btn-review" id="btn-google-review" target="_blank" rel="noopener noreferrer">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92a5.06 5.06 0 0 1-2.2 3.32v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.1z"/>
+                <path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/>
+                <path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z"/>
+                <path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"/>
+              </svg>
+              <span>Rate us on Google</span>
+            </a>
+          </div>
+        </div>
+        <div class="footer-social" id="footer-social" style="display:none;"></div>
+        <div class="footer-bottom">
+          <p class="footer-copyright">© 2026 <span id="footer-copy-name">MEI KONG</span>. All Rights Reserved.</p>
+        </div>
+      </div>
+    </footer>
+
+    <!-- SCROLL TOP -->
+    <button class="scroll-top" id="scroll-top" aria-label="Scroll to top" style="display:none;">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <polyline points="18 15 12 9 6 15"/>
+      </svg>
+    </button>
+
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>

@@ -1,0 +1,44 @@
+{
+  "name": "MEI KONG - Digital Menu",
+  "short_name": "MEI KONG",
+  "description": "Digital Menu for MEI KONG Restaurant - Order via WhatsApp",
+  "start_url": "./index.html",
+  "display": "standalone",
+  "background_color": "#F8F9FA",
+  "theme_color": "#0B0B0C",
+  "orientation": "portrait",
+  "categories": ["food", "shopping"],
+  "lang": "en",
+  "icons": [
+    {
+      "src": "https://drive.google.com/uc?export=view&id=1pwuN0lzVsn7RhrD4OlEJWAoD0b86nazO",
+      "sizes": "32x32",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "https://drive.google.com/uc?export=view&id=1_j_82fW-NOspYrhDw135NhnEOcR6lm2m",
+      "sizes": "96x96",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "https://drive.google.com/uc?export=view&id=1RnLIGRiEAltFqJA4GJCRJgX61sbvFcCT",
+      "sizes": "180x180",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "https://drive.google.com/uc?export=view&id=1JOsiyysJQOQiSUL71l_kzEKaxXlYe3c5",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "https://drive.google.com/uc?export=view&id=1dJHFlsbRv37q9i3f0dgqz00dSoS2RyOj",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ]
+}
